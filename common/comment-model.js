@@ -1,5 +1,5 @@
 /* eslint-disable import/no-unresolved, no-use-before-define */
-import SimpleSchema from 'simpl-schema';
+import SimpleSchema from 'meteor/simple-schema';
 /* eslint-enable import/no-unresolved */
 
 export default ({ Meteor, Mongo, LinkableModel, LinkParent, LikeableModel, ServerTime }) => {
@@ -94,7 +94,6 @@ export default ({ Meteor, Mongo, LinkableModel, LinkParent, LikeableModel, Serve
                 }
                 return undefined;
             },
-            index: -1,
             denyUpdate: true,
         },
         // Latest update date
@@ -113,7 +112,7 @@ export default ({ Meteor, Mongo, LinkableModel, LinkParent, LikeableModel, Serve
     /**
     * A model for a comment which can be linked to many other database objects
     * @class Comment
-    * @extends ParentLink
+    * @extends LinkParent
     * @implements CommentableModel, LikeableModel, LinkableModel
     */
     class Comment extends CommentableModel(LikeableModel(LinkableModel(LinkParent))) {
@@ -121,8 +120,8 @@ export default ({ Meteor, Mongo, LinkableModel, LinkParent, LikeableModel, Serve
         * The user that made the comment
         * @returns {User} A User instance representing the commenting user.
         */
-        user() {
-            return Meteor.users.findOne({ _id: this.userId });
+        async user() {
+            return Meteor.users.findOneAsync({ _id: this.userId });
         }
     }
 

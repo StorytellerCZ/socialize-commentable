@@ -14,6 +14,9 @@ CommentsCollection.allow({
     },
 });
 
+CommentsCollection.createIndexAsync({ linkedObjectId: 1, userId: 1 })
+CommentsCollection.createIndexAsync({ createdAt: -1 })
+
 CommentsCollection.after.insert(function afterInsert(userId, comment) {
     // when a comment is added, update the comment count for the object being commented on
     const collection = this.transform().getCollectionForParentLink();
