@@ -1,5 +1,5 @@
 /* eslint-disable import/no-unresolved, no-use-before-define */
-import SimpleSchema from 'meteor/simple-schema';
+import SimpleSchema from 'meteor/aldeed:simple-schema';
 /* eslint-enable import/no-unresolved */
 
 export default ({ Meteor, Mongo, LinkableModel, LinkParent, LikeableModel, ServerTime }) => {

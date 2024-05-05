@@ -14,8 +14,12 @@ CommentsCollection.allow({
     },
 });
 
-CommentsCollection.createIndexAsync({ linkedObjectId: 1, userId: 1 })
-CommentsCollection.createIndexAsync({ createdAt: -1 })
+try {
+    CommentsCollection.createIndexAsync({ linkedObjectId: 1, userId: 1 })
+    CommentsCollection.createIndexAsync({ createdAt: -1 })
+} catch (e) {
+    console.debug('Failed to create indexes for the commentable collection.')
+}
 
 CommentsCollection.after.insert(function afterInsert(userId, comment) {
     // when a comment is added, update the comment count for the object being commented on

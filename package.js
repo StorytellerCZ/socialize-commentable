@@ -10,9 +10,9 @@ Package.onUse(function _(api) {
     api.versionsFrom(['2.8.1', '3.0-rc.0']);
 
     api.use([
+        'aldeed:simple-schema@1.13.1',
         'socialize:likeable@2.0.0',
-        'reywood:publish-composite@1.8.9',
-        'aldeed:simple-schema@1.13.1'
+        'reywood:publish-composite@1.8.9'
     ]);
 
     api.imply('socialize:likeable');
