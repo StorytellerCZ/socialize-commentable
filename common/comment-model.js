@@ -19,10 +19,20 @@ export default ({ Meteor, Mongo, LinkableModel, LinkParent, LikeableModel, Serve
         * @param {String} body The body text of the comment
         */
         addComment(body) {
+            if (Meteor.isServer) {
+                this.addCommentAsync(body);
+            }
             const comment = this.getLinkObject();
             comment.body = body;
 
             new Comment(comment).save();
+        }
+
+        addCommentAsync(body) {
+            const comment = this.getLinkObject();
+            comment.body = body;
+
+            new Comment(comment).saveAsync();
         }
 
         /**
@@ -120,7 +130,14 @@ export default ({ Meteor, Mongo, LinkableModel, LinkParent, LikeableModel, Serve
         * The user that made the comment
         * @returns {User} A User instance representing the commenting user.
         */
-        async user() {
+        user() {
+            if (Meteor.isServer) {
+                return this.userAsync();
+            }
+            return Meteor.users.findOne({ _id: this.userId });
+        }
+
+        async userAsync() {
             return Meteor.users.findOneAsync({ _id: this.userId });
         }
     }

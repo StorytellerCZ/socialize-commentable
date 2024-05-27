@@ -15,13 +15,13 @@ const optionsArgumentCheck = {
 };
 
 
-publishComposite('socialize.commentsFor', function publishCommentsFor(linkedObjectId, options = { limit: 10, sort: { createdAt: -1 } }) {
+publishComposite('socialize.commentsFor', async function publishCommentsFor(linkedObjectId, options = { limit: 10, sort: { createdAt: -1 } }) {
     check(linkedObjectId, String);
     check(options, optionsArgumentCheck);
     if (this.userId) {
         const currentUser = User.createEmpty(this.userId);
-        const blockedUserIds = currentUser.blockedUserIds();
-        const blockedByUserIds = currentUser.blockedByUserIds();
+        const blockedUserIds = await currentUser.blockedUserIdsAsync();
+        const blockedByUserIds = await currentUser.blockedByUserIdsAsync();
         const blockIds = [...blockedUserIds, ...blockedByUserIds];
 
         if (!blockIds.includes(linkedObjectId)) {
