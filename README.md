@@ -71,7 +71,7 @@ Once we have the appropriate packages imported, the rest of the code will run in
 
 ```javascript
 //this gets imported the same for either environment
-import SimpleSchema from 'simpl-schema';
+import SimpleSchema from 'meteor/aldeed:simple-schema';
 
 //define the collection to hold products
 const PhotosCollection = new Mongo.Collection("photos");
