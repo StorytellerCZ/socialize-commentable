@@ -10,7 +10,7 @@ Package.onUse(function _(api) {
     api.versionsFrom(['2.8.1', '3.0']);
 
     api.use([
-        'aldeed:simple-schema@1.13.1 || 2.0.0',
+        'aldeed:simple-schema@2.0.0 || 3.0.0',
         'socialize:likeable@2.0.0',
         'reywood:publish-composite@1.8.9'
     ]);
