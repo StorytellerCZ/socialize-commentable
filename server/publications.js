@@ -8,6 +8,13 @@ import { LikesCollection } from 'meteor/socialize:likeable';
 import { CommentsCollection } from '../common/common.js';
 
 
+let commentsAccessCheck = async () => true;
+
+/** Configure application authorization before comments are published. */
+export function setCommentsAccessCheck(checkAccess) {
+    commentsAccessCheck = checkAccess;
+}
+
 const optionsArgumentCheck = {
     limit: Match.Optional(Number),
     skip: Match.Optional(Number),
@@ -19,6 +26,7 @@ publishComposite('socialize.commentsFor', async function publishCommentsFor(link
     check(linkedObjectId, String);
     check(options, optionsArgumentCheck);
     if (this.userId) {
+        if (!(await commentsAccessCheck(this.userId, linkedObjectId))) return this.ready();
         const currentUser = User.createEmpty(this.userId);
         const blockedUserIds = await currentUser.blockedUserIdsAsync();
         const blockedByUserIds = await currentUser.blockedByUserIdsAsync();
